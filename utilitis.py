@@ -20,6 +20,13 @@ from VGG_LTH import *
 
 
 
+model_dict = {
+    "vgg16_bn_lth": vgg16_bn_lth,
+    "vgg16_bn": vgg16_bn,
+}
+
+
+
 __all__ = ["setup_model_dataset"]
 
 
