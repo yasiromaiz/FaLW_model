@@ -361,3 +361,14 @@ def accuracy(output, target, topk=(1,)):
 
         return res
         
+def save_checkpoint(state, is_SA_best, pruning, save_path):
+    import os
+    import torch
+
+    filename = os.path.join(save_path, "checkpoint.pth.tar")
+
+    torch.save(state, filename)
+
+    if is_SA_best:
+        best_filename = os.path.join(save_path, "model_SA_best.pth.tar")
+        torch.save(state, best_filename)
