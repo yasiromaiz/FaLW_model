@@ -34,7 +34,9 @@ def main():
 
     # torch.cuda.set_device(int(args.gpu))
 
+
     if torch.cuda.is_available():
+        torch.cuda.set_device(int(args.gpu))
         device = torch.device(f"cuda:{args.gpu}")
     else:
         device = torch.device("cpu")
