@@ -23,7 +23,7 @@ from torch.utils.data.sampler import SubsetRandomSampler
 from train import train
 from val import validate
 from utils import *
-from utilities import setup_model_dataset
+from utilitis import setup_model_dataset
 # from utils import NormalizeByChannelMeanStd
 import sys 
 best_sa = 0
