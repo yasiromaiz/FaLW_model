@@ -27,6 +27,13 @@ from utils import *
 import sys 
 best_sa = 0
 
+def setup_seed(seed):
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    np.random.seed(seed)
+    random.seed(seed)
+    cudnn.deterministic = True
+
 
 def main():
     global args, best_sa
