@@ -42,8 +42,9 @@ def main():
         train_loader_full,
         val_loader,
         test_loader,
-        marked_loader,
+        # marked_loader,
     ) = setup_model_dataset(args)
+    marked_loader = train_loader_full
     model.cuda()
 
     def replace_loader_dataset(
