@@ -15,7 +15,8 @@ import torch.utils.data
 import unlearn_method as unlearn
 
 import utils
-from trainer import validate
+# from trainer import validate
+from val import validate
 
 def main():
     args = arg_parser.parse_args()
