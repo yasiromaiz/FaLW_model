@@ -4,12 +4,16 @@ import os
 from collections import OrderedDict
 
 import arg_parser
-import evaluation
+# import evaluation
+from SVC_MIA import SVC_MIA
+
 import torch
 import torch.nn as nn
 import torch.optim
 import torch.utils.data
-import unlearn
+# import unlearn
+import unlearn_method as unlearn
+
 import utils
 from trainer import validate
 
@@ -191,7 +195,7 @@ def main():
             shadow_train, batch_size=args.batch_size, shuffle=False
         )
 
-        evaluation_result["SVC_MIA_forget_efficacy"] = evaluation.SVC_MIA(
+        evaluation_result["SVC_MIA_forget_efficacy"] = SVC_MIA(
             shadow_train=shadow_train_loader,
             shadow_test=test_loader,
             target_train=None,
