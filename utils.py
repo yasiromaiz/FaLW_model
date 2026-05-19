@@ -400,3 +400,9 @@ def save_checkpoint(state, is_SA_best, pruning, save_path):
 
 def dataset_convert_to_test(dataset, args):
     return dataset
+
+def calculate_dataset_distribution(loader, args):
+
+    return {
+        "dataset_size": len(loader.dataset)
+    }
