@@ -15,6 +15,7 @@ import torch.utils.data
 import unlearn_method as unlearn
 
 import utils
+from utilitis import setup_model_dataset
 # from trainer import validate
 from val import validate
 
@@ -42,7 +43,7 @@ def main():
         val_loader,
         test_loader,
         marked_loader,
-    ) = utils.setup_model_dataset(args)
+    ) = setup_model_dataset(args)
     model.cuda()
 
     def replace_loader_dataset(
