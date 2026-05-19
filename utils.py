@@ -397,3 +397,6 @@ def save_checkpoint(state, is_SA_best, pruning, save_path):
     if is_SA_best:
         best_filename = os.path.join(save_path, "model_SA_best.pth.tar")
         torch.save(state, best_filename)
+
+def dataset_convert_to_test(dataset, args):
+    return dataset
