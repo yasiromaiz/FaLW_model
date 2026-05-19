@@ -8,7 +8,8 @@ import torch
 import torch.nn as nn
 import torch.optim
 import torch.utils.data
-import unlearn
+# import unlearn
+import unlearn_method as unlearn
 import utils
 
 import numpy as np
