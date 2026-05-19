@@ -1,3 +1,5 @@
+import torch
+import os
 import torch.nn as nn
 from torch.utils.data import Dataset
 
@@ -52,3 +54,76 @@ class SimpleDataset(Dataset):
     
     def __getitem__(self, index):
         return (self.data[index], self.targets[index])
+    
+
+
+def get_unlearn_method(name):
+
+    def retrain_method(loaders, model, criterion, args):
+
+        retain_loader = loaders["retain"]
+
+        optimizer = torch.optim.SGD(
+            model.parameters(),
+            lr=args.unlearn_lr,
+            momentum=0.9,
+            weight_decay=5e-4,
+        )
+
+        model.train()
+
+        for epoch in range(args.unlearn_epochs):
+
+            print(f"Retrain Epoch {epoch}")
+
+            for images, targets in retain_loader:
+
+                images = images.cuda()
+                targets = targets.cuda()
+
+                optimizer.zero_grad()
+
+                outputs = model(images)
+
+                loss = criterion(outputs, targets)
+
+                loss.backward()
+
+                optimizer.step()
+
+    return retrain_method
+
+
+def save_unlearn_checkpoint(model, evaluation_result, args):
+
+    os.makedirs(args.save_dir, exist_ok=True)
+
+    path = os.path.join(
+        args.save_dir,
+        "unlearn_checkpoint.pth"
+    )
+
+    torch.save(
+        {
+            "model": model.state_dict(),
+            "evaluation_result": evaluation_result,
+        },
+        path,
+    )
+
+
+def load_unlearn_checkpoint(model, device, args):
+
+    path = os.path.join(
+        args.save_dir,
+        "unlearn_checkpoint.pth"
+    )
+
+    if not os.path.exists(path):
+        return None
+
+    checkpoint = torch.load(path, map_location=device)
+
+    model.load_state_dict(checkpoint["model"])
+
+    return model, checkpoint["evaluation_result"]
