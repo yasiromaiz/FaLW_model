@@ -1,10 +1,35 @@
+# import copy
+
+# import torch
+# import torch.nn as nn
+# import torch.nn.utils.prune as prune
+# from torch.autograd import grad
+# from torch.nn import Conv2d
+
+
+
 import copy
+import random
+import numpy as np
 
 import torch
 import torch.nn as nn
+import torch.backends.cudnn as cudnn
 import torch.nn.utils.prune as prune
+
 from torch.autograd import grad
 from torch.nn import Conv2d
+
+
+
+
+def setup_seed(seed):
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    np.random.seed(seed)
+    random.seed(seed)
+    cudnn.deterministic = True
+
 
 __all__ = [
     "pruning_model",
