@@ -34,7 +34,7 @@ def setup_model_dataset(args):
     if args.dataset == "cifar10":    # for cipher10
 
         classes = 10    #this is for cipher10 [dataset]
-        args.num_classes = 10
+        args.num_classes = 10    # this is added while trainng the cipher100 model 
         
         normalization = NormalizeByChannelMeanStd(
             mean=[0.4914, 0.4822, 0.4465], std=[0.2470, 0.2435, 0.2616]
@@ -46,13 +46,26 @@ def setup_model_dataset(args):
     elif args.dataset == "cifar100":
 
         classes = 100      #this is for cipher100 [dataset]
-        args.num_classes = 100
-        
+        args.num_classes = 100    
+
         normalization = NormalizeByChannelMeanStd(
             mean=[0.5071, 0.4866, 0.4409], std=[0.2673, 0.2564, 0.2762]
         )
         train_set_loader, val_loader, test_loader = cifar100_dataloaders(
             batch_size=args.batch_size, data_dir=args.data, num_workers=args.workers
+        )
+    
+    elif args.dataset == "svhn":
+        classes = 10
+        normalization = NormalizeByChannelMeanStd(
+            mean=[0.4377, 0.4438, 0.4728],
+            std=[0.1980, 0.2010, 0.1970]
+        )
+
+        train_set_loader, val_loader, test_loader = svhn_dataloaders(
+            batch_size=args.batch_size,
+            data_dir=args.data,
+            num_workers=args.workers
         )
 
     else:
