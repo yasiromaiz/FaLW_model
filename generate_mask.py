@@ -110,7 +110,7 @@ def main():
         train_loader_full,
         val_loader,
         test_loader,
-        marked_loader,
+        # marked_loader,
     ) = setup_model_dataset(args)
     model.cuda()
 
