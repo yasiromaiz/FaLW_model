@@ -59,7 +59,8 @@ class SimpleDataset(Dataset):
 
 def get_unlearn_method(name):
 
-    def retrain_method(loaders, model, criterion, args):
+    # def retrain_method(loaders, model, criterion, args):
+    def retrain_method(loaders, model, criterion, args, mask=None):
 
         retain_loader = loaders["retain"]
 
