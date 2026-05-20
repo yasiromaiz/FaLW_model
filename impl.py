@@ -3,10 +3,14 @@ import time
 
 import matplotlib.pyplot as plt
 import numpy as np
-import pruner
+# import pruner
+
 import torch
 import utils
-from pruner import extract_mask, prune_model_custom, remove_prune
+# added the from utils import (...)  ;  by removing the import pruner , from pruner ....
+from utils import (extract_mask, prune_model_custom, remove_prune, check_sparsity,)
+
+# from pruner import extract_mask, prune_model_custom, remove_prune
 
 
 def plot_training_curve(training_result, save_dir, prefix):
@@ -35,9 +39,15 @@ def load_unlearn_checkpoint(model, device, args):
     if checkpoint is None or checkpoint.get("state_dict") is None:
         return None
 
-    current_mask = pruner.extract_mask(checkpoint["state_dict"])
-    pruner.prune_model_custom(model, current_mask)
-    pruner.check_sparsity(model)
+    # current_mask = pruner.extract_mask(checkpoint["state_dict"])
+    # pruner.prune_model_custom(model, current_mask)
+    # pruner.check_sparsity(model)
+
+
+    current_mask = extract_mask(checkpoint["state_dict"])
+    prune_model_custom(model, current_mask)
+    check_sparsity(model)
+
 
     model.load_state_dict(checkpoint["state_dict"])
 
