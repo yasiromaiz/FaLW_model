@@ -12,7 +12,8 @@ import torch.utils.data
 import unlearn_method as unlearn
 import utils
 # from trainer import validate
-from val import validate
+from utilitis import setup_model_dataset  # added this line
+from val import validate    # update this line from line 14 --> line 16
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -40,8 +41,11 @@ def main():
         train_loader_full,
         val_loader,
         test_loader,
-        marked_loader,
-    ) = utils.setup_model_dataset(args)
+        # marked_loader,
+    # ) = utils.setup_model_dataset(args)
+    ) = setup_model_dataset(args)
+
+    marked_loader = train_loader_full  #we added this manually
     
     model.cuda()
 
