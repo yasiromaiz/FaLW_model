@@ -385,8 +385,20 @@ class TinyImageNetDataset(Dataset):
     def __len__(self):
         return len(self.dataset)
 
+    # def __getitem__(self, idx):
+    #     img, target = self.dataset[idx]
+
+    #     if self.norm_trans is not None:
+    #         img = self.norm_trans(img)
+
+    #     return img, target
+
     def __getitem__(self, idx):
-        img, target = self.dataset[idx]
+        img_path, target = self.dataset.samples[idx]
+
+        img = Image.open(img_path).convert("RGB")
+
+        img = transforms.ToTensor()(img)
 
         if self.norm_trans is not None:
             img = self.norm_trans(img)
