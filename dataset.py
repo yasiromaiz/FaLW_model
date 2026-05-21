@@ -379,6 +379,9 @@ class TinyImageNetDataset(Dataset):
         self.dataset = image_folder_set
         self.norm_trans = norm_trans
 
+        #Important
+        self.targets = np.array(image_folder_set.targets)
+
     def __len__(self):
         return len(self.dataset)
 
