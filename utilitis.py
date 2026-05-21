@@ -68,6 +68,21 @@ def setup_model_dataset(args):
             num_workers=args.workers
         )
 
+    
+    elif args.dataset == "tinyimagenet":
+        classes = 200
+
+        normalization = torch.nn.Identity()
+
+        tiny_dataset = TinyImageNet(args)
+
+        train_set_loader, val_loader, test_loader = tiny_dataset.data_loaders(
+            batch_size=args.batch_size,
+            data_dir=args.data,
+            num_workers=args.workers
+        )
+
+
     else:
         raise ValueError("Dataset not supprot yet !")
 
