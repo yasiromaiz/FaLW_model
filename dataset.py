@@ -351,27 +351,46 @@ def cifar100_dataloaders_no_val(
     return train_loader, val_loader, test_loader
 
 
+# class TinyImageNetDataset(Dataset):
+#     def __init__(self, image_folder_set, norm_trans=None, start=0, end=-1):
+#         self.imgs = []
+#         self.targets = []
+#         self.transform = image_folder_set.transform
+#         for sample in tqdm(image_folder_set.imgs[start:end]):
+#             self.targets.append(sample[1])
+#             img = transforms.ToTensor()(Image.open(sample[0]).convert("RGB"))
+#             if norm_trans is not None:
+#                 img = norm_trans(img)
+#             self.imgs.append(img)
+#         self.imgs = torch.stack(self.imgs)
+
+#     def __len__(self):
+#         return len(self.targets)
+
+#     def __getitem__(self, idx):
+#         if self.transform is not None:
+#             return self.transform(self.imgs[idx]), self.targets[idx]
+#         else:
+#             return self.imgs[idx], self.targets[idx]
+
+
 class TinyImageNetDataset(Dataset):
-    def __init__(self, image_folder_set, norm_trans=None, start=0, end=-1):
-        self.imgs = []
-        self.targets = []
-        self.transform = image_folder_set.transform
-        for sample in tqdm(image_folder_set.imgs[start:end]):
-            self.targets.append(sample[1])
-            img = transforms.ToTensor()(Image.open(sample[0]).convert("RGB"))
-            if norm_trans is not None:
-                img = norm_trans(img)
-            self.imgs.append(img)
-        self.imgs = torch.stack(self.imgs)
+    def __init__(self, image_folder_set, norm_trans=None):
+        self.dataset = image_folder_set
+        self.norm_trans = norm_trans
 
     def __len__(self):
-        return len(self.targets)
+        return len(self.dataset)
 
     def __getitem__(self, idx):
-        if self.transform is not None:
-            return self.transform(self.imgs[idx]), self.targets[idx]
-        else:
-            return self.imgs[idx], self.targets[idx]
+        img, target = self.dataset[idx]
+
+        if self.norm_trans is not None:
+            img = self.norm_trans(img)
+
+        return img, target
+    
+
 
 
 class TinyImageNet:
@@ -466,12 +485,16 @@ class TinyImageNet:
         valid_idx = np.hstack(valid_idx)
         train_set_copy = copy.deepcopy(train_set)
 
-        valid_set.imgs = train_set_copy.imgs[valid_idx]
+        # valid_set.imgs = train_set_copy.imgs[valid_idx]    # we comment and update with next line code
+        valid_set.dataset.samples = [train_set_copy.dataset.samples[i] for i in valid_idx]
+
         valid_set.targets = train_set_copy.targets[valid_idx]
 
         train_idx = list(set(range(len(train_set))) - set(valid_idx))
 
-        train_set.imgs = train_set_copy.imgs[train_idx]
+        # train_set.imgs = train_set_copy.imgs[train_idx]     # we comment and update with next line code
+        train_set.dataset.samples = [train_set_copy.dataset.samples[i] for i in train_idx]
+
         train_set.targets = train_set_copy.targets[train_idx]
 
         if class_to_replace is not None and indexes_to_replace is not None:
@@ -490,7 +513,10 @@ class TinyImageNet:
             )
             if num_indexes_to_replace is None or num_indexes_to_replace == 500:
                 test_set.targets = np.array(test_set.targets)
-                test_set.imgs = test_set.imgs[test_set.targets != class_to_replace]
+                
+                # test_set.imgs = test_set.imgs[test_set.targets != class_to_replace]
+                test_set.dataset.samples = test_set.dataset.samples[test_set.targets != class_to_replace]
+
                 test_set.targets = test_set.targets[
                     test_set.targets != class_to_replace
                 ]
