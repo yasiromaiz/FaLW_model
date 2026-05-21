@@ -71,6 +71,7 @@ def setup_model_dataset(args):
     
     elif args.dataset == "tinyimagenet":
         classes = 200
+        args.num_classes = 200
 
         normalization = torch.nn.Identity()
 
