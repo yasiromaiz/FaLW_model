@@ -9,6 +9,9 @@ import glob
 import os
 from shutil import move
 
+from medmnist import TissueMNIST  #added this line
+from torchvision import transforms   #added this line
+
 import numpy as np
 import torch
 from PIL import Image
@@ -404,6 +407,62 @@ class TinyImageNetDataset(Dataset):
             img = self.norm_trans(img)
 
         return img, target
+    
+
+
+# Adding the below TissueMINSTDataset
+class TissueMNISTDataset(torch.utils.data.Dataset):
+
+    def __init__(self, split='train'):
+
+        transform = transforms.Compose([
+            transforms.Resize((32, 32)),
+            transforms.Grayscale(num_output_channels=3),
+            transforms.ToTensor(),
+        ])
+
+        self.dataset = TissueMNIST(
+            split=split,
+            download=True,
+            transform=transform
+        )
+
+    def __len__(self):
+        return len(self.dataset)
+
+    def __getitem__(self, idx):
+
+        image, label = self.dataset[idx]
+
+        return image, int(label)
+
+
+def tissuemnist_dataloaders(batch_size=32):
+
+        train_set = TissueMNISTDataset(split='train')
+        val_set = TissueMNISTDataset(split='val')
+        test_set = TissueMNISTDataset(split='test')
+
+        train_loader = torch.utils.data.DataLoader(
+            train_set,
+            batch_size=batch_size,
+            shuffle=True
+        )
+
+        val_loader = torch.utils.data.DataLoader(
+            val_set,
+            batch_size=batch_size,
+            shuffle=False
+        )
+
+        test_loader = torch.utils.data.DataLoader(
+            test_set,
+            batch_size=batch_size,
+            shuffle=False
+        )
+
+        return train_loader, val_loader, test_loader
+
     
 
 

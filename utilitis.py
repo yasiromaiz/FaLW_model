@@ -14,6 +14,8 @@ from ResNet import *
 from ResNets import *
 from VGG_LTH import *
 
+from dataset import tissuemnist_dataloaders   # Adding this line
+
 
 
 # from advertorch.utils import NormalizeByChannelMeanStd
@@ -82,6 +84,20 @@ def setup_model_dataset(args):
             data_dir=args.data,
             num_workers=args.workers
         )
+
+
+    # Adding this below code dataset == "tissuemnist"
+    elif args.dataset == "tissuemnist":
+
+        classes = 8
+        args.num_classes = 8
+
+        normalization = torch.nn.Identity()
+
+        train_set_loader, val_loader, test_loader = tissuemnist_dataloaders(
+            batch_size=args.batch_size
+        )
+
 
 
     else:
