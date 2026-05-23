@@ -237,17 +237,26 @@ def main():
             shadow_train, batch_size=args.batch_size, shuffle=False
         )
 
-        evaluation_result["SVC_MIA_forget_efficacy"] = SVC_MIA(
-            shadow_train=shadow_train_loader,
-            shadow_test=test_loader,
-            target_train=None,
-            target_test=forget_loader,
-            model=model,
-        )
-        unlearn.save_unlearn_checkpoint(model, evaluation_result, args)
-        print("SVC_MIA_forget_efficacy Metrics:")
-        for k,v in evaluation_result["SVC_MIA_forget_efficacy"].items():
-            print(f"----  {k}:{v}")
+
+        # Uncomment for evaluating the SVC_MIA results later while running in the Kaggle
+        # From line 245 to 256 OK
+
+
+        # evaluation_result["SVC_MIA_forget_efficacy"] = SVC_MIA(
+        #     shadow_train=shadow_train_loader,
+        #     shadow_test=test_loader,
+        #     target_train=None,
+        #     target_test=forget_loader,
+        #     model=model,
+        # )
+
+        # unlearn.save_unlearn_checkpoint(model, evaluation_result, args)
+        # print("SVC_MIA_forget_efficacy Metrics:")
+        # for k,v in evaluation_result["SVC_MIA_forget_efficacy"].items():
+        #     print(f"----  {k}:{v}")
+
+
+
 
     unlearn.save_unlearn_checkpoint(model, evaluation_result, args)
 
