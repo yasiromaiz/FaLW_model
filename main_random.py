@@ -245,17 +245,17 @@ def main():
     # Also uncomment the code in the main_forget the SVC_MIA code
     
 
-        # evaluation_result["SVC_MIA_forget_efficacy"] = evaluation.SVC_MIA(
-        #     shadow_train=shadow_train_loader,
-        #     shadow_test=test_loader,
-        #     target_train=None,
-        #     target_test=forget_loader,
-        #     model=model,
-        # )
-        # unlearn.save_unlearn_checkpoint(model, evaluation_result, args)
-        # print("SVC_MIA_forget_efficacy Metrics:")
-        # for k,v in evaluation_result["SVC_MIA_forget_efficacy"].items():
-        #     print(f"----  {k}:{v}")
+        evaluation_result["SVC_MIA_forget_efficacy"] = evaluation.SVC_MIA(
+            shadow_train=shadow_train_loader,
+            shadow_test=test_loader,
+            target_train=None,
+            target_test=forget_loader,
+            model=model,
+        )
+        unlearn.save_unlearn_checkpoint(model, evaluation_result, args)
+        print("SVC_MIA_forget_efficacy Metrics:")
+        for k,v in evaluation_result["SVC_MIA_forget_efficacy"].items():
+            print(f"----  {k}:{v}")
     
 
 
