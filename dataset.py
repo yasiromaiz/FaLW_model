@@ -464,6 +464,71 @@ def tissuemnist_dataloaders(batch_size=32):
         return train_loader, val_loader, test_loader
 
     
+# We are adding the below class for the bloodmnist working OK
+class BloodMNISTDataset(Dataset):
+
+    def __init__(self, split="train"):
+
+        self.data = np.load(f"./data/bloodmnist.npz")
+
+        if split == "train":
+            self.images = self.data["train_images"]
+            self.labels = self.data["train_labels"]
+
+        elif split == "val":
+            self.images = self.data["val_images"]
+            self.labels = self.data["val_labels"]
+
+        elif split == "test":
+            self.images = self.data["test_images"]
+            self.labels = self.data["test_labels"]
+
+        self.transform = transforms.Compose([
+            transforms.ToTensor()
+        ])
+
+    def __len__(self):
+        return len(self.images)
+
+    def __getitem__(self, idx):
+
+        image = self.images[idx]
+        label = int(self.labels[idx])
+
+        image = Image.fromarray(image)
+
+        image = self.transform(image)
+
+        return image, label
+
+
+
+# Adding the def bloodmnist_dataloaders()
+def bloodmnist_dataloaders(batch_size=32):
+
+    train_dataset = BloodMNISTDataset(split="train")
+    val_dataset = BloodMNISTDataset(split="val")
+    test_dataset = BloodMNISTDataset(split="test")
+
+    train_loader = DataLoader(
+        train_dataset,
+        batch_size=batch_size,
+        shuffle=True
+    )
+
+    val_loader = DataLoader(
+        val_dataset,
+        batch_size=batch_size,
+        shuffle=False
+    )
+
+    test_loader = DataLoader(
+        test_dataset,
+        batch_size=batch_size,
+        shuffle=False
+    )
+
+    return train_loader, val_loader, test_loader
 
 
 
