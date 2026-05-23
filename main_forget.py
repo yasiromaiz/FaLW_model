@@ -4,6 +4,8 @@ import copy
 import os
 from collections import OrderedDict
 
+from main_train import setup_seed     #Added this line for TissueMNIST
+
 import arg_parser
 # import evaluation
 from SVC_MIA import SVC_MIA
