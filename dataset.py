@@ -493,7 +493,8 @@ class BloodMNISTDataset(Dataset):
     def __getitem__(self, idx):
 
         image = self.images[idx]
-        label = int(self.labels[idx][0])
+        # label = int(self.labels[idx][0])
+        label = int(np.array(self.labels[idx]).squeeze())
 
         image = Image.fromarray(image)
 
