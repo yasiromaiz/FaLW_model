@@ -490,15 +490,36 @@ class BloodMNISTDataset(Dataset):
     def __len__(self):
         return len(self.images)
 
+    # def __getitem__(self, idx):
+
+    #     image = self.images[idx]
+    #     # label = int(self.labels[idx][0])
+    #     label = int(np.array(self.labels[idx]).squeeze())
+
+    #     image = Image.fromarray(image)
+
+    #     image = self.transform(image)
+
+    #     return image, label
+
+
     def __getitem__(self, idx):
 
+        # convert tensor/array indices to scalar
+        if isinstance(idx, np.ndarray):
+            idx = idx.item()
+
+        if torch.is_tensor(idx):
+            idx = idx.item()
+
         image = self.images[idx]
-        # label = int(self.labels[idx][0])
-        label = int(np.array(self.labels[idx]).squeeze())
+
+        label = int(self.labels[idx][0])
 
         image = Image.fromarray(image)
 
-        image = self.transform(image)
+        if self.transform is not None:
+            image = self.transform(image)
 
         return image, label
 
