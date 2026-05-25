@@ -11,7 +11,21 @@ def validate(val_loader, model, criterion, args):
     losses = utils.AverageMeter()
     top1 = utils.AverageMeter()
     device = (torch.device("cuda:%s"%args.gpu) if torch.cuda.is_available() else torch.device("cpu"))
-    accuracy_metric = torchmetrics.Accuracy(task="multiclass", num_classes=args.num_classes+(1 if args.unlearn=='boundary_expanding' else 0), average="none").to(device)
+
+    # accuracy_metric = torchmetrics.Accuracy(task="multiclass", num_classes=args.num_classes+(1 if args.unlearn=='boundary_expanding' else 0), average="none").to(device)
+
+    # I added this below code and replace the line 15 to line 18 for [ BE model ]
+    num_eval_classes = args.num_classes
+
+    if args.unlearn == "boundary_expanding":
+        num_eval_classes += 1
+
+    accuracy_metric = torchmetrics.Accuracy(
+        task="multiclass",
+        num_classes=num_eval_classes,
+        average="none"
+    ).to(device)
+
     # switch to evaluate mode
     model.eval()
     if args.imagenet_arch:
