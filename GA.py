@@ -26,7 +26,13 @@ def GA(data_loaders, model, criterion, optimizer, epoch, args, mask=None):
     # switch to train mode
     model.train()
 
+    # Added this below 3 lines code from 30 --> 33
+    with open("ga_debug.txt", "a") as f:
+        f.write("GA FUNCTION EXECUTED\n")
+
     print("========== RUNNING GA METHOD ==========")
+
+
 
     start = time.time()
     if args.imagenet_arch:
