@@ -2,7 +2,9 @@ import sys
 import time
 
 import torch
-import utils
+# import utils
+
+from . import utils
 
 # from .impl import iterative_unlearn
 
