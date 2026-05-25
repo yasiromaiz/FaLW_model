@@ -4,7 +4,10 @@ import torch
 import torch.nn as nn
 import utils
 
+# from .impl import iterative_unlearn
+
 from .impl import iterative_unlearn
+
 
 
 def expand_model(model):
