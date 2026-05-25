@@ -79,8 +79,12 @@ def RL(data_loaders, model, criterion, optimizer, epoch, args, mask=None):
                       'Time {3:.2f}'.format(
                           epoch, i, loader_len, end-start, loss=losses, top1=top1))
                 start = time.time()
+    
       
-    elif args.dataset == "cifar10" or args.dataset == "svhn":
+    # elif args.dataset == "cifar10" or args.dataset == "svhn":
+
+    elif args.dataset in ["cifar10", "svhn", "bloodmnist"]:
+
         losses = utils.AverageMeter()
         top1 = utils.AverageMeter()
       

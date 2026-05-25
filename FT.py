@@ -109,6 +109,9 @@ def FT_iter(
                     if param.grad is not None:
                         param.grad *= mask[name]
 
+            # Added the below line 
+            print(loss.item())
+            
             optimizer.step()
 
             output = output_clean.float()

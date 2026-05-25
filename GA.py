@@ -26,6 +26,8 @@ def GA(data_loaders, model, criterion, optimizer, epoch, args, mask=None):
     # switch to train mode
     model.train()
 
+    print("========== RUNNING GA METHOD ==========")
+
     start = time.time()
     if args.imagenet_arch:
         device = (
@@ -85,6 +87,8 @@ def GA(data_loaders, model, criterion, optimizer, epoch, args, mask=None):
             output_clean = model(image)
             loss = -criterion(output_clean, target)
 
+            print("GA LOSS : ", loss.item())
+            
             optimizer.zero_grad()
             loss.backward()
 
@@ -123,6 +127,9 @@ def GA(data_loaders, model, criterion, optimizer, epoch, args, mask=None):
 @iterative_unlearn
 def GA_l1(data_loaders, model, criterion, optimizer, epoch, args):
     train_loader = data_loaders["forget"]
+
+    # WE added the only nxt line to check the running is correct or not
+    print(len(train_loader.dataset))
 
     losses = utils.AverageMeter()
     top1 = utils.AverageMeter()
