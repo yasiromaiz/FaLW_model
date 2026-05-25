@@ -251,10 +251,14 @@ def main():
         )
 
         unlearn.save_unlearn_checkpoint(model, evaluation_result, args)
-        print("SVC_MIA_forget_efficacy Metrics:")
-        for k,v in evaluation_result["SVC_MIA_forget_efficacy"].items():
-            print(f"----  {k}:{v}")
+        
+        # print("SVC_MIA_forget_efficacy Metrics:")
+        # for k,v in evaluation_result["SVC_MIA_forget_efficacy"].items():
+        #     print(f"----  {k}:{v}")
 
+
+        mia_score = evaluation_result["SVC_MIA_forget_efficacy"]["confidence"]
+        print(f"SVC_MIA Confidence: {mia_score}")
 
 
 
