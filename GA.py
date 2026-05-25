@@ -12,8 +12,13 @@ from .impl import iterative_unlearn
 
 
 
-sys.path.append(".")
-from imagenet import get_x_y_from_data_dict
+# sys.path.append(".")
+# from imagenet import get_x_y_from_data_dict
+
+
+from .imagenet import get_x_y_from_da
+
+
 
 
 def l1_regularization(model):
