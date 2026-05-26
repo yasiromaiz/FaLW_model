@@ -15,8 +15,8 @@ import torch.nn as nn
 import torch.optim
 import torch.utils.data
 # import unlearn
-# import unlearn_method as unlearn    # uncomment this if needed I think for FaLW we need this
-import __init__ as unlearn
+import unlearn_method as unlearn    # uncomment this if needed I think for FaLW we need this
+# import __init__ as unlearn
 
 import utils
 from utilitis import setup_model_dataset
