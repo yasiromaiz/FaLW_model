@@ -113,3 +113,10 @@ def fisher_new(data_loaders, model, criterion, args):
         mu, var = get_mean_var(p, args, False)
         p.data = mu + var.sqrt() * torch.empty_like(p.data).normal_()
     return model 
+
+
+# NOTE: How it works is 
+# 1) train model, 2) estimate the fisher info, 3) find the imp parameters, 
+# 4)Add noise inversely proportional to imporatnce, 5) forget target data.
+
+# Note : The advanced method of this fisher is " new_fisher model " which uses the 2nd order-derivation, slow, advanced, probabilistic, bayesian fisher
