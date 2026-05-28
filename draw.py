@@ -15,6 +15,9 @@ import utils
 from train import validate
 
 
+# NOTE : These draw.py helps to draw the graphs and the models to visualize and understand
+
+
 
 def main():
     args = arg_parser.parse_args()

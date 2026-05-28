@@ -112,4 +112,4 @@ def fisher_new(data_loaders, model, criterion, args):
     for i, p in enumerate(model.parameters()):
         mu, var = get_mean_var(p, args, False)
         p.data = mu + var.sqrt() * torch.empty_like(p.data).normal_()
-    return model
+    return model 
